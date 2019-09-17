@@ -1,5 +1,5 @@
 # James Morrissey
-# computingID: jpm9rk
+# Data used located at https://www.kaggle.com/AnalyzeBoston/crimes-in-boston#crime.csv
 
 import numpy as np
 import pandas as pd
