@@ -6,11 +6,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 plt.style.use('classic')
 
-# QUESTIONS TO ANSWER ABOUT THE DATA
-# What day of the week are crimes most likely to occur
-# What days have particularly high crime rates -> is it violent crime
-# Monthly crime totals
-# Most common crimes for each day of the week
 
 
 crime = pd.read_csv('crime.csv', encoding='unicode_escape')
