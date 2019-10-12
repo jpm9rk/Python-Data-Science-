@@ -27,5 +27,3 @@ plt.ylabel('Latitude')
 plt.title("BNB's in NYC by Neighbourhood Group")
 plt.legend()
 plt.show()
-
-bnb.set_index('id',inplace=True)
