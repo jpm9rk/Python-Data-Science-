@@ -14,10 +14,10 @@ from shapely.geometry import Polygon, Point
 
 denver = pd.read_csv('crime.csv')
 # determine if there are any missing values in a column, and if so, how many are there
-# for column in list(denver.columns):
-#     print('does', column, 'have any missing values?', denver[column].isnull().any())
-#     if denver[column].isnull().any():
-#         print('\t there are', np.sum(denver[column].isnull().values), ' missing values in this column')
+for column in list(denver.columns):
+    print('does', column, 'have any missing values?', denver[column].isnull().any())
+    if denver[column].isnull().any():
+        print('\t there are', np.sum(denver[column].isnull().values), ' missing values in this column')
 
 just_crime = denver.query('IS_CRIME == 1')
 just_traffic = denver.query('IS_TRAFFIC == 1')
