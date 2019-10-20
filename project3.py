@@ -1,3 +1,4 @@
+
 # James Morrissey
 # computingID: jpm9rk
 # used students.csv
@@ -49,16 +50,21 @@ e_sum = groupE.describe()
 
 # math scores in particular for each racial group
 
-print('GROUP A\n')
+print('GROUP A')
 print(groupA.describe())
-print('GROUP B\n')
+print('\n')
+print('GROUP B')
 print(groupB.describe())
-print('GROUP C\n')
+print('\n')
+print('GROUP C')
 print(groupC.describe())
-print('GROUP D\n')
+print('\n')
+print('GROUP D')
 print(groupD.describe())
-print('GROUP E\n')
+print('\n')
+print('GROUP E')
 print(groupE.describe())
+print('\n')
 
 x = ['Group A', 'Group B', 'Group C', 'group D', 'group E']
 y = [a_sum.math_score['mean'],b_sum.math_score['mean'],c_sum.math_score['mean'],
