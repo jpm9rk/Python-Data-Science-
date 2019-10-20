@@ -4,6 +4,8 @@
 # /new-york-city-airbnb-open-data/downloads/new-york-city-airbnb-open-data.zip/3"
 
 
+
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -11,8 +13,10 @@ plt.style.use('classic')
 
 # put the values into a dataframe
 bnb = pd.read_csv('AB_NYC_2019.csv')
+
 # Series containing average price per housing group
 group_price = bnb.groupby('neighbourhood_group')['price'].mean().sort_values(ascending=False)
+
 # round housing prices to 2 decimal places
 group_price = group_price.apply(lambda x: round(x, 2))
 
@@ -26,28 +30,30 @@ plt.title('Average Housing Price by Neighbourhood Group')
 plt.show()
 
 bnb = bnb.set_index('id')
-# neighborhoods in the bronx and their prices
+
+# neighborhoods in each neighbourhood group
 bronx_neighbourhoods = list(bnb[bnb.neighbourhood_group == 'Bronx']['neighbourhood'].sort_values().unique())
-bronx_prices = bnb[bnb.neighbourhood_group == 'Bronx'][['neighbourhood','price']].groupby('neighbourhood')['price']\
-    .mean().apply(lambda x: round(x, 2)).sort_values(ascending=False)
-# neighbourhoods in staten island and their prices
 staten_island_neighbourhoods = list(bnb[bnb.neighbourhood_group == 'Staten Island']['neighbourhood']
                                     .sort_values().unique())
-staten_island_prices = bnb[bnb.neighbourhood_group == 'Staten Island'][['neighbourhood', 'price']]\
-    .groupby('neighbourhood')['price'].mean().apply(lambda x: round(x,2)).sort_values(ascending=False)
-# queens neighbourhoods and their prices
-queens_prices = bnb[bnb.neighbourhood_group == 'Queens'][['neighbourhood', 'price']]\
-    .groupby('neighbourhood')['price'].mean().apply(lambda x: round(x,2)).sort_values(ascending=False)
 queens_neighbourhoods = list(bnb[bnb.neighbourhood_group == 'Queens']['neighbourhood'].sort_values().unique())
-# Brooklyn neighbourhoods and their prices
-brooklyn_prices = bnb[bnb.neighbourhood_group == 'Brooklyn'][['neighbourhood', 'price']]\
-    .groupby('neighbourhood')['price'].mean().apply(lambda x: round(x,2)).sort_values(ascending=False)
 brooklyn_neighbourhoods = list(bnb[bnb.neighbourhood_group == 'Brooklyn']['neighbourhood'].sort_values().unique())
-# Manhattan neighbourhoods and their prices
-manhattan_prices = bnb[bnb.neighbourhood_group == 'Manhattan'][['neighbourhood', 'price']]\
-    .groupby('neighbourhood')['price'].mean().apply(lambda x: round(x,2)).sort_values(ascending=False)
 manhattan_neighbourhoods = list(bnb[bnb.neighbourhood_group == 'Manhattan']['neighbourhood'].sort_values().unique())
 
+
+def neighbourhood_prices(neighbourhood):
+    """
+    Return a Series containing the avg bnb prices for each neighbourhood in a neighbourhood group
+    :param neighbourhood: (str) particular neighbourhood group
+    :return: (pd.Series) Series containing the neighbourhood and avg bnb price
+    """
+    return bnb[bnb.neighbourhood_group == neighbourhood][['neighbourhood','price']].groupby('neighbourhood')['price']\
+        .mean().apply(lambda x: round(x, 2)).sort_values(ascending=False)
+
+print('Average bnb neighbourhood prices in the Bronx',neighbourhood_prices('Bronx'))
+print('Average bnb neighbourhood prices in Queens',neighbourhood_prices('Queens'))
+print('Average bnb neighbourhood prices in Brooklyn',neighbourhood_prices('Bronx'))
+print('Average bnb neighbourhood prices in Staten Island',neighbourhood_prices('Staten Island'))
+print('Average bnb neighbourhood prices in ',neighbourhood_prices('Manhattan'))
 
 # PLOT AVERAGE HOUSING PRICE BY NEIGHBOURHOOD GROUP AND ROOM TYPE
 price_by_type = bnb.pivot_table('price',index='neighbourhood_group', columns='room_type')
@@ -94,6 +100,28 @@ plt.xlabel('Longitude')
 plt.ylabel('Latitude')
 plt.title('Bnb Prices Under $1000 by Location')
 plt.show()
+
+
+
+color = {'Manhattan':'red','Brooklyn':'gold',
+                                     'Queens':'coral','Bronx': 'skyblue', 'Staten Island':'palegreen'}
+
+for value in color:
+    plt.scatter(bnb[bnb.neighbourhood_group == value].longitude,
+    bnb[bnb.neighbourhood_group == value].latitude, c=color[value],
+    label=value)
+plt.title("Location of BNB's in NYC by Neighbourhood Group")
+plt.legend()
+plt.show()
+
+
+plt.title('BNB Housing by Neighbourhood Group in NYC')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+
+
+
+
 
 
 
