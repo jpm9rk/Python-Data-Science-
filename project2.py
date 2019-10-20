@@ -6,6 +6,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 plt.style.use('classic')
 
+# QUESTIONS TO ANSWER ABOUT THE DATA
+# What day of the week are crimes most likely to occur
+# What days have particularly high crime rates -> is it violent crime
+# Monthly crime totals
+# Most common crimes for each day of the week
 
 
 crime = pd.read_csv('crime.csv', encoding='unicode_escape')
@@ -21,9 +26,9 @@ crime_2017 = len(crime[crime.YEAR == 2017])
 crime_2018 = len(crime[crime.YEAR == 2018])
 
 # Most common types of crimes
-crime.OFFENSE_DESCRIPTION.value_counts().head()
+print('Common types of crimes',crime.OFFENSE_DESCRIPTION.value_counts().head())
 # Crime stats by area
-crime_area = crime.groupby('DISTRICT')['OFFENSE_DESCRIPTION'].value_counts()
+print('crime stats by area',crime_area = crime.groupby('DISTRICT')['OFFENSE_DESCRIPTION'].value_counts())
 # Crime stats by month for 2018
 filtered_crime = crime.query('YEAR == 2018')
 by_month = filtered_crime.MONTH.value_counts().sort_index()
@@ -35,6 +40,10 @@ monthly_shooting = shootings.groupby(pd.Grouper(freq='M'))['SHOOTING'].sum()
 shootings2016 = monthly_shooting[monthly_shooting.index.year == 2016]
 shootings2017 = monthly_shooting[monthly_shooting.index.year == 2017]
 shootings2018 = monthly_shooting[monthly_shooting.index.year == 2018]
+
+# print('Monthly shootings in 2016', shootings2016)
+# print('Monthly shootings in 2017', shootings2017)
+# print('Monthly shootings in 2018', shootings2018)
 
 shootings2016.plot()
 plt.title('Boston Shootings per Month in 2016')
@@ -49,7 +58,6 @@ crime.set_index('OCCURRED_ON_DATE', inplace=True)
 crime.index = crime.index.to_period('M')
 crime.sort_index(ascending=False, inplace=True)
 crime.index = crime.index.to_timestamp()
-
 
 
 
